@@ -1,7 +1,8 @@
 <component name="ArtifactManager">
   <artifact type="exploded-war" name="jty:war exploded">
-    <output-path>$PROJECT_DIR$/out/artifacts/jty_war_exploded</output-path>
+    <output-path>$PROJECT_DIR$/target/jty-1.0</output-path>
     <root id="root">
+      <element id="module-output" name="jty" />
       <element id="directory" name="WEB-INF">
         <element id="directory" name="classes">
           <element id="module-output" name="jty" />
@@ -90,15 +91,23 @@
           <element id="library" level="project" name="Maven: net.sf.dozer:dozer:5.5.1" />
           <element id="library" level="project" name="Maven: commons-beanutils:commons-beanutils:1.9.1" />
           <element id="library" level="project" name="Maven: commons-collections:commons-collections:3.2.1" />
+          <element id="library" level="project" name="Maven: javax.servlet:javax.servlet-api:3.1.0" />
           <element id="library" level="project" name="Maven: com.github.axet:kaptcha:0.0.9" />
           <element id="library" level="project" name="Maven: com.jhlabs:filters:2.0.235" />
           <element id="library" level="project" name="Maven: org.quartz-scheduler:quartz:2.2.1" />
           <element id="library" level="project" name="Maven: c3p0:c3p0:0.9.1.1" />
           <element id="library" level="project" name="Maven: org.quartz-scheduler:quartz-jobs:2.2.1" />
+          <element id="library" level="project" name="Maven: com.rabbitmq:amqp-client:3.5.1" />
+          <element id="library" level="project" name="Maven: org.springframework.amqp:spring-rabbit:1.4.5.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework.retry:spring-retry:1.1.2.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework.amqp:spring-amqp:1.4.5.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-messaging:4.1.6.RELEASE" />
         </element>
       </element>
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/target/jty-1.0/META-INF/MANIFEST.MF" />
+      </element>
       <element id="javaee-facet-resources" facet="jty/web/Web" />
-      <element id="module-output" name="jty" />
     </root>
   </artifact>
 </component>

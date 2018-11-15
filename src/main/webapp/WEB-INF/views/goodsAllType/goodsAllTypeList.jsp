@@ -29,7 +29,6 @@
 <script type="text/javascript">
 var dg;
 var d;
-var permissionDg;
 var parentPermId;
 $(function(){   
 	dg=$('#dg').treegrid({  
@@ -54,10 +53,34 @@ $(function(){
     enableHeaderContextMenu: false,
     enableRowContextMenu: false,
     toolbar:'#tb',
-    dataPlain: true
+    dataPlain: true,
+    onDblClickRow : function(row) {
+        var rowIndex = row.id;
+        showDetail(rowIndex);
+    },
+
 	});
 	
 });
+
+//查看
+function showDetail(rowIndex) {
+    d=$("#dlg").dialog({
+        title: '查看商品类型',
+        width: 520,
+        height: 420,
+        href:'${ctx}/business/goodsAllType/look/'+rowIndex,
+        maximizable:true,
+        modal:true,
+        buttons:[{
+            text:'取消',
+            handler:function(){
+                d.panel('close');
+            }
+        }]
+    });
+
+}
 
 //弹窗增加
 function add() {
@@ -128,18 +151,18 @@ function upd(){
 	if(rowIsNull(row)) return;
 	//父级权限
 	parentPermId=row.pid;
-	d=$("#dlg").dialog({   
-	    title: '修改菜单',    
-	    width: 450,    
-	    height: 320,    
-	    href:'${ctx}/system/permission/menu/update/'+row.id,
+	d=$("#dlg").dialog({
+	    title: '修改商品类型',
+        width: 520,
+        height: 420,
+	    href:'${ctx}/business/goodsAllType/update/'+row.id,
 	    maximizable:true,
 	    modal:true,
 	    buttons:[{
 			text:'确认',
 			handler:function(){
 				$("#mainform").submit();
-			}
+            }
 		},{
 			text:'取消',
 			handler:function(){
@@ -149,9 +172,6 @@ function upd(){
 	});
 
 }
-
-var nowIcon;
-var icon_dlg;
 </script>
 </body>
 </html>

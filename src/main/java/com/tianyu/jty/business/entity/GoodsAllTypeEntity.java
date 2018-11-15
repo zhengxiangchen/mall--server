@@ -1,5 +1,7 @@
 package com.tianyu.jty.business.entity;
 
+import org.hibernate.annotations.DynamicUpdate;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

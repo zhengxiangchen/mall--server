@@ -1,19 +1,22 @@
 <?xml version="1.1" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:jdbc="http://www.springframework.org/schema/jdbc" xmlns:jee="http://www.springframework.org/schema/jee"
-	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:jpa="http://www.springframework.org/schema/data/jpa"
-	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:task="http://www.springframework.org/schema/task"
-	xsi:schemaLocation="
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	   xmlns:jdbc="http://www.springframework.org/schema/jdbc" xmlns:jee="http://www.springframework.org/schema/jee"
+	   xmlns:tx="http://www.springframework.org/schema/tx" xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+	   xmlns:aop="http://www.springframework.org/schema/aop" xmlns:task="http://www.springframework.org/schema/task"
+	   xmlns:rabbit="http://www.springframework.org/schema/rabbit"
+	   xsi:schemaLocation="
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
 		http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
 		http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee.xsd
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
-		http://www.springframework.org/schema/data/jpa
-		http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd"
-	default-lazy-init="true">
+		http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd
+		http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd
+		http://www.springframework.org/schema/rabbit http://www.springframework.org/schema/rabbit/spring-rabbit.xsd"
+
+	   default-lazy-init="true">
 
 	<description>Spring公共配置 </description>
 	
@@ -77,6 +80,32 @@
 		<!--initialSize: 初始化连接 -->
 		<property name="initialSize" value="${jdbc.pool.maxIdle}" />
 	</bean>
+
+	<!-- 连接配置 -->
+	<rabbit:connection-factory id="connectionFactory" host="${mq.host}" username="${mq.username}"
+							   password="${mq.password}" port="${mq.port}"  />
+
+	<rabbit:admin connection-factory="connectionFactory"/>
+
+	<rabbit:template id="amqpTemplate" exchange="newOrder_exchange" connection-factory="connectionFactory"  />
+
+	<rabbit:direct-exchange name="newOrder_exchange" durable="true" auto-delete="false">
+		<rabbit:bindings>
+			<rabbit:binding queue="newOrder"/>
+		</rabbit:bindings>
+	</rabbit:direct-exchange>
+
+	<rabbit:queue id="newOrder" name="newOrder" durable="true" auto-delete="false" exclusive="false" />
+
+	<!-- 消费者 -->
+	<bean name="receive" class="com.tianyu.jty.common.rabbitmq.Receive"></bean>
+
+	<!-- 配置监听 -->
+	<rabbit:listener-container connection-factory="connectionFactory" acknowledge="auto">
+		<rabbit:listener queues="newOrder" ref="receive"/>
+	</rabbit:listener-container>
+
+
 		
 	<!-- aop记录方法执行时间 -->
 	<!-- <aop:config>

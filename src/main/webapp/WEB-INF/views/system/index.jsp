@@ -120,7 +120,41 @@
 
     </div>
 <div id="dlg"></div>
+<audio id="myaudio" src="${ctx}/static/mp3/notice.mp3" controls="controls" hidden="true" >
 <script type="text/javascript">
+//ajax轮询开始--是否有新订单提醒
+setInterval(function(){
+    getNotice();
+},5000);
+
+
+function getNotice(){
+    $.ajax({
+        async:true,
+        type:'get',
+        url:"${ctx}/business/notice/getNotice",
+        success: function(data){
+            var number = data;
+            if(number > 0){
+                $.messager.show({
+                    title : "提示",
+                    msg: "收到了" + number + "条新订单",
+                    style:{
+                        right:'',
+                        top:document.body.scrollTop+document.documentElement.scrollTop,
+                        bottom:''
+                    }
+                });
+                var myAuto = document.getElementById('myaudio');
+                myAuto.play();
+            }
+        }
+    });
+}
+
+
+
+
 $.ajax({
 	async:false,
 	type:'get',

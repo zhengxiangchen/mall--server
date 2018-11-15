@@ -4,6 +4,9 @@
 <head>
 <title></title>
 <%@ include file="/WEB-INF/views/include/easyui.jsp"%>
+	<meta http-equiv="pragma" content="no-cache">
+	<meta http-equiv="cache-control" content="no-cache">
+	<meta http-equiv="expires" content="0">
 </head>
 <body>
 <div>
@@ -13,6 +16,8 @@
 			<td>类型名称：</td>
 			<td>
 				<input type="hidden" name="id" value="${goodsAllType.id }"/>
+                <input type="hidden" name="banner" value="${goodsAllType.banner }"/>
+                <input type="hidden" name="indexImg" value="${goodsAllType.indexImg }"/>
 				<input id="name" name="name" type="text" value="${goodsAllType.name }" class="easyui-validatebox" data-options="width: 180,required:'required'"/>
 			</td>
 		</tr>
@@ -22,7 +27,7 @@
 		</tr>
 		<tr>
 			<td>banner图片：</td>
-			<td>
+			<td id="file1_td">
 				<input type="file" class="easyui-filebox" style="width:200px" onchange="PreviewImage(this,'imgHeadPhoto1','divPreview1')" id="file1" name="file1"/>
 			</td>
 			<td>
@@ -33,7 +38,7 @@
 		</tr>
 		<tr id = "indexImg">
 			<td>二级类型图标：</td>
-			<td>
+			<td id="file2_td">
 				<input type="file" class="easyui-filebox" style="width:200px" onchange="PreviewImage(this,'imgHeadPhoto2','divPreview2')" id="file2" name="file2"/>
 			</td>
 			<td>
@@ -55,11 +60,28 @@ if(action=='create'){
 	// $('#pid').val(parentPermId);
 }else if(action=='update'){
 	$('#pid').val(parentPermId);
+}else if(action == 'look'){
+    $('#name').validatebox({disabled: true});
+    $("#pid").combotree({disabled: true});
+
+    $('#file1_td').hide();
+    $('#file2_td').hide();
+
 }
 
 var pid = $('#pid').val();
 if(pid == "" || pid.length <= 0){
     $('#indexImg').hide();
+}
+
+var banner = "${goodsAllType.banner}";
+var indexImg = "${goodsAllType.indexImg}";
+if(banner.length > 0){
+    document.getElementById("imgHeadPhoto1").setAttribute("src",banner);
+}
+
+if(indexImg.length > 0){
+    document.getElementById("imgHeadPhoto2").setAttribute("src",indexImg);
 }
 
 //上级菜单
