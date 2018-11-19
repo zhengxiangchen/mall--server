@@ -51,4 +51,12 @@ public class GoodsAllTypeService extends BaseService<GoodsAllTypeEntity, Integer
     public List<GoodsAllTypeEntity> getFirstTypeList() {
         return goodsAllTypeDao.getFirstTypeList();
     }
+
+    /**
+     * 二级商品类型集合
+     * @return
+     */
+    public List<GoodsAllTypeEntity> getSecondTypeList() {
+        return goodsAllTypeDao.getSecondTypeList();
+    }
 }

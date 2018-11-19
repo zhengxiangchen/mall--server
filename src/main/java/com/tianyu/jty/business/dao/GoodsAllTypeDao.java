@@ -48,4 +48,16 @@ public class GoodsAllTypeDao extends HibernateDao<GoodsAllTypeEntity, Integer> {
         sqlQuery.setResultTransformer(Transformers.aliasToBean(GoodsAllTypeEntity.class));
         return sqlQuery.list();
     }
+
+    /**
+     * 二级商品类型集合
+     * @return
+     */
+    public List<GoodsAllTypeEntity> getSecondTypeList() {
+        StringBuffer sb = new StringBuffer();
+        sb.append("select t.id id, t.pid pid, t.name name from mini_goods_all_type t where t.pid is not null");
+        SQLQuery sqlQuery=createSQLQuery(sb.toString());
+        sqlQuery.setResultTransformer(Transformers.aliasToBean(GoodsAllTypeEntity.class));
+        return sqlQuery.list();
+    }
 }

@@ -2,7 +2,6 @@
   <artifact type="exploded-war" name="jty:war exploded">
     <output-path>$PROJECT_DIR$/target/jty-1.0</output-path>
     <root id="root">
-      <element id="module-output" name="jty" />
       <element id="directory" name="WEB-INF">
         <element id="directory" name="classes">
           <element id="module-output" name="jty" />
@@ -49,6 +48,7 @@
           <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-databind:2.4.4" />
           <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-annotations:2.4.0" />
           <element id="library" level="project" name="Maven: com.fasterxml.jackson.module:jackson-module-jaxb-annotations:2.4.4" />
+          <element id="library" level="project" name="Maven: com.alibaba:fastjson:1.2.46" />
           <element id="library" level="project" name="Maven: org.slf4j:slf4j-log4j12:1.7.10" />
           <element id="library" level="project" name="Maven: log4j:log4j:1.2.17" />
           <element id="library" level="project" name="Maven: org.slf4j:slf4j-api:1.7.10" />
@@ -104,6 +104,7 @@
           <element id="library" level="project" name="Maven: org.springframework:spring-messaging:4.1.6.RELEASE" />
         </element>
       </element>
+      <element id="module-output" name="jty" />
       <element id="directory" name="META-INF">
         <element id="file-copy" path="$PROJECT_DIR$/target/jty-1.0/META-INF/MANIFEST.MF" />
       </element>

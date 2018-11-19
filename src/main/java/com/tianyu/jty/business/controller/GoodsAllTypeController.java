@@ -4,6 +4,7 @@ import com.tianyu.jty.business.entity.GoodsAllTypeEntity;
 import com.tianyu.jty.business.service.GoodsAllTypeService;
 import com.tianyu.jty.common.utils.FileUtils;
 import com.tianyu.jty.common.web.BaseController;
+import org.apache.log4j.Logger;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,6 +18,8 @@ import java.util.List;
 @Controller
 @RequestMapping("business/goodsAllType")
 public class GoodsAllTypeController extends BaseController {
+
+    private static Logger logger = Logger.getLogger(GoodsAllTypeController.class);
 
     private static String BANNER_PATH = "E://all_images/banner/";
     private static String SECOND_BANNER_PATH = "E://all_images/banner/second_banner/";
@@ -57,6 +60,26 @@ public class GoodsAllTypeController extends BaseController {
     public List<GoodsAllTypeEntity> firstTypeList(){
         List<GoodsAllTypeEntity> typeList = goodsAllTypeService.getFirstTypeList();
         return typeList;
+    }
+
+    /**
+     * 所有二级商品类型集合(JSON)
+     */
+    @RequestMapping(value="list/secondTypeList",method = RequestMethod.GET)
+    @ResponseBody
+    public List<GoodsAllTypeEntity> secondTypeList(){
+        List<GoodsAllTypeEntity> typeList = goodsAllTypeService.getSecondTypeList();
+        return typeList;
+    }
+
+    /**
+     * 根据id获取二级类型名称
+     */
+    @RequestMapping(value = "getSecondTypeName/{id}")
+    @ResponseBody
+    public String getSecondTypeName(@PathVariable("id") Integer id) {
+        GoodsAllTypeEntity entity = goodsAllTypeService.get(id);
+        return entity.getName();
     }
 
     /**
@@ -234,7 +257,7 @@ public class GoodsAllTypeController extends BaseController {
                 String suffix  = fileName.substring(fileName.lastIndexOf("."));
 
                 String picName = goodsAllType.getName() + suffix;
-                System.out.println(picName);
+                logger.info(picName);
                 try {
                     FileUtils.uploadFile(file1.getBytes(), BANNER_PATH, picName);
                 } catch (Exception e) {

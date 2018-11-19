@@ -88,10 +88,9 @@ if(indexImg.length > 0){
 $('#pid').combotree({
 	width:180,
 	method:'GET',
-    url: '${ctx}/business/goodsAllType/list/json',
+    url: '${ctx}/business/goodsAllType/list/firstTypeList',
     idField : 'id',
     textFiled : 'name',
-	parentField : 'pid',
 	iconCls: 'icon',
     animate:true,
     onClick: function(node){
